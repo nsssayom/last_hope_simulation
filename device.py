@@ -1,3 +1,4 @@
+import sys
 import socketio
 import json
 from threading import Timer
@@ -7,12 +8,8 @@ from classes.LocationService import LocationService
 from classes.Sensor import Sensor
 import time
 
-device = DeviceBase("53e5c16f-d87b-4b87-9af9-f5bbdc79d818",
-                    "IMEI0001",
-                    "+8801717018376")
-
 sio = socketio.Client(ssl_verify=False)
-sio.connect("http://192.168.31.200:3000")
+sio.connect("http://victim.live:3000")
 
 
 @sio.on('connect')
@@ -50,7 +47,10 @@ def init_disaster_mode():
 
 
 def main():
+    global device 
+    device =  DeviceBase(sys.argv[1], sys.argv[2], sys.argv[3])
+    # DeviceBase("f3872c19-ef22-4be2-9afe-855ce068a304", "123456789", "+8801717018376"
+    
     while (True):
         init_disaster_mode()
-        time.sleep(3)
-        
+        time.sleep(4)
